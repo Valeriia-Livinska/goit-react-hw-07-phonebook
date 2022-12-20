@@ -1,11 +1,17 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/contactsSlice';
 import { getContacts, getFilterValue } from 'redux/selectors';
-import { ContactDetail, DeleteButton } from './ContactItem.styled';
-import PropTypes from 'prop-types';
 
-export const ContactItem = ({ onDeleteContact }) => {
+import { ContactDetail, DeleteButton } from './ContactItem.styled';
+
+export const ContactItem = () => {
   const contacts = useSelector(getContacts);
   const filterValue = useSelector(getFilterValue);
+  const dispatch = useDispatch();
+
+  const deleteContactFromList = contactId => {
+    dispatch(deleteContact(contactId));
+  };
 
   const normalizedfilter = filterValue.toLowerCase();
   const filteredContacts = contacts.filter(contact =>
@@ -18,14 +24,10 @@ export const ContactItem = ({ onDeleteContact }) => {
         <span>
           {name}: {number}
         </span>
-        <DeleteButton type="button" onClick={() => onDeleteContact(id)}>
+        <DeleteButton type="button" onClick={() => deleteContactFromList(id)}>
           Delete
         </DeleteButton>
       </ContactDetail>
     );
   });
-};
-
-ContactItem.propTypes = {
-  onDeleteContact: PropTypes.func.isRequired,
 };

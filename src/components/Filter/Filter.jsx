@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setContactsFiltration } from 'redux/filterSlice';
 import { getFilterValue } from 'redux/selectors';
 import { Input } from './Filter.styled';
 import { Box } from 'components/Box';
 
-export const Filter = ({ onChange }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
   const filterValue = useSelector(getFilterValue);
+
+  const handleFilterChange = event => {
+    dispatch(setContactsFiltration(event.currentTarget.value));
+  };
+
   return (
     <Box flexDirection="column" alignItems="center" mb={5}>
       <label>Find contacts by name</label>
@@ -13,12 +19,8 @@ export const Filter = ({ onChange }) => {
         type="text"
         name="filter"
         value={filterValue}
-        onChange={onChange}
+        onChange={handleFilterChange}
       />
     </Box>
   );
-};
-
-Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
 };

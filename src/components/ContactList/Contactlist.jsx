@@ -1,14 +1,9 @@
 import { ContactItem } from './ContactItem/ContactItem';
-import PropTypes from 'prop-types';
 
-export const ContactList = ({ onDeleteContact }) => {
+export const ContactList = () => {
   return (
     <ul>
-      <ContactItem onDeleteContact={onDeleteContact} />
+      <ContactItem />
     </ul>
   );
-};
-
-ContactList.propTypes = {
-  onDeleteContact: PropTypes.func.isRequired,
 };
