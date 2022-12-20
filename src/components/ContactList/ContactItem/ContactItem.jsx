@@ -1,8 +1,18 @@
+import { useSelector } from 'react-redux';
+import { getContacts, getFilterValue } from 'redux/selectors';
 import { ContactDetail, DeleteButton } from './ContactItem.styled';
 import PropTypes from 'prop-types';
 
-export const ContactItem = ({ contacts, onDeleteContact }) => {
-  return contacts.map(({ id, name, number }) => {
+export const ContactItem = ({ onDeleteContact }) => {
+  const contacts = useSelector(getContacts);
+  const filterValue = useSelector(getFilterValue);
+
+  const normalizedfilter = filterValue.toLowerCase();
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(normalizedfilter)
+  );
+
+  return filteredContacts.map(({ id, name, number }) => {
     return (
       <ContactDetail key={id}>
         <span>
@@ -17,12 +27,5 @@ export const ContactItem = ({ contacts, onDeleteContact }) => {
 };
 
 ContactItem.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
   onDeleteContact: PropTypes.func.isRequired,
 };
