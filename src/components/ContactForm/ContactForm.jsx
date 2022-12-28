@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
-import { nanoid } from 'nanoid';
+import { addContact } from 'redux/operations';
+// import { nanoid } from 'nanoid';
 import { Form, Input, SubmitButton } from './ContactForm.styled';
 import { Box } from 'components/Box';
 
@@ -34,7 +34,7 @@ export const ContactForm = () => {
     event.preventDefault();
 
     const newContact = {
-      id: nanoid(),
+      // id: nanoid(),
       name,
       number,
     };
